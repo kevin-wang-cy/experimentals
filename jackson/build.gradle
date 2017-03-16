@@ -1,0 +1,9 @@
+description = 'jackson experimentals'
+
+ext {
+}
+
+dependencies {
+}
+
+

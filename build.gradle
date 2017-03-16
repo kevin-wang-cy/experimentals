@@ -1,0 +1,70 @@
+buildscript {
+    ext {
+
+    }
+    repositories {
+        maven {
+            url "${nexusPublicUrl}"
+        }
+    }
+
+    dependencies {
+        //
+    }
+}
+
+allprojects {
+    group = 'experimentals'
+    version = '1.0-SNAPSHOT'
+
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    repositories {
+        maven {
+            url "${nexusPublicUrl}"
+        }
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '3.3'
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: "${nexusReleaseUrl}") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                snapshotRepository(url: "${nexusSnapshotUrl}") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+            }
+        }
+    }
+}
+
+
+description = 'experimentals'
+
+
+subprojects {
+    archivesBaseName = "${rootProject.name}-${project.name}"
+
+    ext {
+
+    }
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    eclipse {
+        project {
+            name = "${rootProject.name}-${project.name}"
+        }
+    }
+}
