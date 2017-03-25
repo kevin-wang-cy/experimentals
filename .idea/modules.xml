@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/experimentals.iml" filepath="$PROJECT_DIR$/.idea/modules/experimentals.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jackson/jackson.iml" filepath="$PROJECT_DIR$/.idea/modules/jackson/jackson.iml" group="jackson" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jackson/jackson_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jackson/jackson_main.iml" group="jackson" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jackson/jackson_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jackson/jackson_test.iml" group="jackson" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey.iml" group="springboot-jersey" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker.iml" group="springboot-jersey-swagger-docker" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker_main.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker_main.iml" group="springboot-jersey-swagger-docker" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker_test.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey-swagger-docker/springboot-jersey-swagger-docker_test.iml" group="springboot-jersey-swagger-docker" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey_main.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey_main.iml" group="springboot-jersey" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey_test.iml" filepath="$PROJECT_DIR$/.idea/modules/springboot-jersey/springboot-jersey_test.iml" group="springboot-jersey" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/template/template.iml" filepath="$PROJECT_DIR$/.idea/modules/template/template.iml" group="template" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/template/template_main.iml" filepath="$PROJECT_DIR$/.idea/modules/template/template_main.iml" group="template" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/template/template_test.iml" filepath="$PROJECT_DIR$/.idea/modules/template/template_test.iml" group="template" />
+    </modules>
+  </component>
+</project>

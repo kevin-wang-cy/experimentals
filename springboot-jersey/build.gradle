@@ -1,0 +1,30 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		maven {
+            		url "${nexusPublicUrl}"
+        	}
+
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'org.springframework.boot'
+
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-jersey') {
+        	exclude module: "spring-boot-starter-tomcat"
+	}
+	compile("org.springframework.boot:spring-boot-starter-jetty")
+
+	// handle Java 8 LocalDate, LocalTime, LocalDateTime and ZonedDateTime
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

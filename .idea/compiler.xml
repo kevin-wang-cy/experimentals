@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="jackson_main" target="1.8" />
+      <module name="jackson_test" target="1.8" />
+      <module name="springboot-jersey-swagger-docker_main" target="1.8" />
+      <module name="springboot-jersey-swagger-docker_test" target="1.8" />
+      <module name="springboot-jersey_main" target="1.8" />
+      <module name="springboot-jersey_test" target="1.8" />
+      <module name="template_main" target="1.8" />
+      <module name="template_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
