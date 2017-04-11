@@ -24,7 +24,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-jetty")
 
 	// handle Java 8 LocalDate, LocalTime, LocalDateTime and ZonedDateTime
-	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	compile("com.fasterxml.cryptograph.datatype:cryptograph-datatype-jsr310")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

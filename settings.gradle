@@ -1,5 +1,6 @@
 rootProject.name='experimentals'
+include 'cryptograph'
 include 'springboot-jersey'
-include 'jackson'
+include 'cryptograph'
 include 'template'
 include 'springboot-jersey-swagger-docker'

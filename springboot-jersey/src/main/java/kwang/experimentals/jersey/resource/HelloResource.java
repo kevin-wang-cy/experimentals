@@ -50,7 +50,7 @@ public class HelloResource {
 
         LOGGER.info("toString() = " + result.toString());
 
-        LOGGER.info(String.format("zonedDateTime GetLong: %s, sqlDate.getTime: %s, UtilDate.getTime: %s", result.getClock().getZonedDateTime().toInstant().toEpochMilli(), result.getClock().getSqlDate().getTime(), result.getClock().getUtilDate().getTime()));
+        LOGGER.info(String.format("zonedDateTime toInstance#toEpochMilli: %s, sqlDate.getTime: %s, UtilDate.getTime: %s", result.getClock().getZonedDateTime().toInstant().toEpochMilli(), result.getClock().getSqlDate().getTime(), result.getClock().getUtilDate().getTime()));
 
         return Response.status(Response.Status.OK).entity(result).build();
     }

@@ -32,7 +32,7 @@ public class JerseyAPIConfiguration extends ResourceConfig {
         // register endpoints
         packages("kwang.experimentals.jersey.resource");
 
-        // register jackson for json
+        // register cryptograph for json
         register(new ObjectMapperContextResolver(objectMapper));
     }
 

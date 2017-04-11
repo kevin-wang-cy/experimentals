@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="cryptograph_main" target="1.8" />
+      <module name="cryptograph_test" target="1.8" />
       <module name="jackson_main" target="1.8" />
       <module name="jackson_test" target="1.8" />
       <module name="springboot-jersey-swagger-docker_main" target="1.8" />
