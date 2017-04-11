@@ -1,5 +1,6 @@
 rootProject.name='experimentals'
 include 'cryptograph'
+include 'jackson'
 include 'springboot-jersey'
 include 'cryptograph'
 include 'template'
