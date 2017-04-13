@@ -4,6 +4,7 @@ ext {
 }
 
 dependencies {
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
     testCompile 'junit:junit:4.12'
 }
 
