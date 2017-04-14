@@ -15,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     @RequestMapping(method = RequestMethod.GET)
-    public Map<String, String> user(Principal user) {
-        return Collections.singletonMap("message", "user is: "+user.toString());
+    public Principal user(Principal user) {
+        return user;
     }
 }
