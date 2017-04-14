@@ -1,4 +1,6 @@
 rootProject.name='experimentals'
+include 'oauth2-sample1-authserver'
+include 'oauth2-sample1-resourceserver'
 include 'cryptograph'
 include 'jackson'
 include 'springboot-jersey'
