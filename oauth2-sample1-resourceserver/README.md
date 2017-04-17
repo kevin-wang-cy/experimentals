@@ -245,3 +245,84 @@ curl -H "Authorization: Bearer 0b92e94e-166e-4e83-9d2b-1e787d4a55af" -v localhos
 }
 
 ```
+
+```bash
+# Test Access Control - svc-account-3 doesn't have the ROLE_RS_READ permission
+curl -vv -u "svc-account-3:svc-account-3-secret" -X POST "http://localhost:9800/auth/oauth/token" -d grant_type=client_credentials | jq .
+
+{
+  "access_token": "37d2e42d-d0fa-48ed-9365-b75ec2e8787f",
+  "token_type": "bearer",
+  "expires_in": 299,
+  "scope": "resource-server-read resource-server-write"
+}
+
+curl -H "Authorization: Bearer 37d2e42d-d0fa-48ed-9365-b75ec2e8787f" -v localhost:8800/rs/ | jq .
+
+{
+  "error": "access_denied",
+  "error_description": "Access is denied"
+}
+
+
+# Test Access Control - svc-account-2 defines resource ids but not have "oauth2_resource" permission
+curl -vv -u "svc-account-2:svc-account-2-secret" -X POST "http://localhost:9800/auth/oauth/token" -d grant_type=client_credentials | jq .
+
+{
+  "access_token": "88240c75-d51f-4093-9cf4-9734ae512ff9",
+  "token_type": "bearer",
+  "expires_in": 299,
+  "scope": "scope-1 scope-2"
+}
+
+curl -H "Authorization: Bearer 88240c75-d51f-4093-9cf4-9734ae512ff9" -v localhost:8800/rs/ | jq .
+
+{
+  "error": "invalid_token",
+  "error_description": "88240c75-d51f-4093-9cf4-9734ae512ff9"
+}
+
+# Test Access Control - svc-account-4 defines resource ids with "oauth2_resource" in it
+
+curl -vv -u "svc-account-4:svc-account-4-secret" -X POST "http://localhost:9800/auth/oauth/token" -d grant_type=client_credentials | jq .
+
+{
+  "access_token": "5ab85813-9ab8-4e04-9b62-f36fb5967362",
+  "token_type": "bearer",
+  "expires_in": 299,
+  "scope": "scope-1 scope-2"
+}
+
+curl -H "Authorization: Bearer 5ab85813-9ab8-4e04-9b62-f36fb5967362" -v localhost:8800/rs/ | jq .
+ 
+{
+  "message": "Hello world!"
+}
+
+# Test #oauth2.hasScope access, access denied due to no scope defined in svc-account-4 client
+curl -H "Authorization: Bearer 5ab85813-9ab8-4e04-9b62-f36fb5967362" -v localhost:8800/rs/user | jq .
+{
+  "error": "access_denied",
+  "error_description": "Access is denied"
+}
+
+
+## Test #oauth2.hasScope access, still access denied on svc-account-3 client is due to bug: 
+curl -vv -u "svc-account-3:svc-account-3-secret" -X POST "http://localhost:9800/auth/oauth/token" -d grant_type=client_credentials | jq .
+
+{
+  "access_token": "a2f94c98-9e0d-4d9b-ac38-2c95b53ff990",
+  "token_type": "bearer",
+  "expires_in": 264,
+  "scope": "resource-server-read resource-server-write"
+}
+
+curl -H "Authorization: Bearer a2f94c98-9e0d-4d9b-ac38-2c95b53ff990" -v localhost:8800/rs/user | jq .
+
+{
+  "error": "access_denied",
+  "error_description": "Access is denied"
+}
+
+
+```

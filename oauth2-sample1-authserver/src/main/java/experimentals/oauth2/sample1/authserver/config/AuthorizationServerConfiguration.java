@@ -50,7 +50,7 @@ public class AuthorizationServerConfiguration {
                     .authorizedGrantTypes("client_credentials", "password", "refresh_token", "authorization_code", "implicit")
                     .scopes("scope-1", "scope-2")
                     .additionalInformation("addinfo1:info1", "addinfo2:info2")
-                    .authorities("authority1", "authority2")
+                    .authorities("ROLE_RS_READ", "authority1", "authority2")
                     .resourceIds("resoruce-id-1", "resource-id-2")
                     .autoApprove("auto-approve-1", "auto-approve-2")
                     .redirectUris("http://redirect-uri-1", "http://redirect-uri-2")
@@ -60,7 +60,20 @@ public class AuthorizationServerConfiguration {
                     .accessTokenValiditySeconds(300)
                     .refreshTokenValiditySeconds(1800)
                     .authorizedGrantTypes("client_credentials", "password", "refresh_token")
-                    .scopes("resource-server-read", "resource-server-write");
+                    .scopes("resource-server-read", "resource-server-write")
+                    .authorities("ROLE_RS_WRITE")
+                    .and()
+                    .withClient("svc-account-4")
+                    .secret("svc-account-4-secret")
+                    .accessTokenValiditySeconds(300)
+                    .refreshTokenValiditySeconds(1800)
+                    .authorizedGrantTypes("client_credentials", "password", "refresh_token", "authorization_code", "implicit")
+                    .scopes("scope-1", "scope-2")
+                    .additionalInformation("addinfo1:info1", "addinfo2:info2")
+                    .authorities("ROLE_RS_READ", "authority1", "authority2")
+                    .resourceIds("oauth2-resource", "resoruce-id-1", "resource-id-2")
+                    .autoApprove("auto-approve-1", "auto-approve-2")
+                    .redirectUris("http://redirect-uri-1", "http://redirect-uri-2");
 
         }
 

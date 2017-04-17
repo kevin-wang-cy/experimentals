@@ -1,6 +1,7 @@
 package experimentals.oauth2.sample1.rsserver.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  */
 @Configuration
 @EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RSServerConfiguration extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
