@@ -1,7 +1,10 @@
 package experimentals.oauth2.sample1.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -13,6 +16,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 /**
  * @author kevin.wang.cy@gmail.com
@@ -28,9 +35,19 @@ public class AuthorizationServerConfiguration {
         @Autowired
         private AuthenticationManager authenticationManager;
 
+        @Autowired
+        private TokenStore tokenStore;
+
+        @Autowired
+        private JwtAccessTokenConverter jwtTokenEnhancer;
+
         @Override
         public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
             super.configure(security);
+
+            // jwt
+            security.tokenKeyAccess("permitAll()")
+                    .checkTokenAccess("isAuthenticated()");
         }
 
         @Override
@@ -83,7 +100,23 @@ public class AuthorizationServerConfiguration {
 
             endpoints.authenticationManager(authenticationManager);
 
+            // jwt
+            endpoints.tokenStore(tokenStore).tokenEnhancer(jwtTokenEnhancer);
+        }
 
+        @Bean (name = "tokenStore")
+        public TokenStore tokenStore(@Autowired JwtAccessTokenConverter jwtTokenEnhancer) {
+            return new JwtTokenStore(jwtTokenEnhancer);
+        }
+
+        @Bean(name = "jwtTokenEnhancer")
+        protected JwtAccessTokenConverter jwtTokenEnhancer(@Value("${jwt.keystore.file}") String keystore, @Value("${jwt.keystore.password}") String pwd, @Value("${jwt.keystore.alias}") String alias) {
+            KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
+                    new ClassPathResource(keystore),
+                    pwd.toCharArray());
+            JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+            converter.setKeyPair(keyStoreKeyFactory.getKeyPair(alias));
+            return converter;
         }
     }
 

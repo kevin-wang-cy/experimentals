@@ -7,3 +7,11 @@ logging:
 security:
   user:
     password: none
+
+
+
+jwt:
+  keystore:
+    file: jwt.jks
+    password: mySecretKey
+    alias: jwt-default-test
