@@ -22,6 +22,14 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public Principal user(Principal user) {
 
+        // org.springframework.boot.autoconfigure.security.oauth2.resource.FixedPrincipalExtractor default below keys for principal
+        // "user", "username", "userid", "user_id", "login", "id", "name"
+
+
+        // org.springframework.boot.autoconfigure.security.oauth2.resource.FixedAuthoritiesExtractor
+        // authorities => ["ROLE_USER1", "ROLE_AdMIN2"] or
+        // authorities => [{"authority": "ROLE1"}, {"role": "ROLE_ADMIN"}, {"value": "ROLE_2"}, {"XX": "XXX", "authority":"ROLE_XXX"}]
+
         logger.info("AS /user has been called");
         logger.debug("user info: "+user.toString());
 

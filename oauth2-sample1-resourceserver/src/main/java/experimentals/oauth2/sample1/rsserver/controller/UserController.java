@@ -18,6 +18,7 @@ public class UserController {
     @PreAuthorize("#oauth2.hasScope('resource-server-read')")
     @RequestMapping(method = RequestMethod.GET)
     public Principal user(Principal user) {
+
         return user;
     }
 }

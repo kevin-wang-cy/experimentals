@@ -326,3 +326,130 @@ curl -H "Authorization: Bearer a2f94c98-9e0d-4d9b-ac38-2c95b53ff990" -v localhos
 
 
 ```
+
+```bash
+
+# After add CustomUserInfoTokenService
+
+# svc-account-3 can get the resource of /user
+curl -vv -u "svc-account-3:svc-account-3-secret" -X POST "http://localhost:9800/auth/oauth/token"         -d grant_type=client_credentials  | jq .
+
+{
+  "access_token": "4e2f86fc-78af-4004-b992-152f1e73366f",
+  "token_type": "bearer",
+  "expires_in": 299,
+  "scope": "resource-server-read resource-server-write"
+}
+
+curl -H "Authorization: Bearer 4e2f86fc-78af-4004-b992-152f1e73366f" -v localhost:8800/rs/user | jq .
+
+{
+  "authorities": [
+    {
+      "authority": "ROLE_RS_WRITE"
+    }
+  ],
+  "details": {
+    "remoteAddress": "0:0:0:0:0:0:0:1",
+    "sessionId": null,
+    "tokenValue": "4e2f86fc-78af-4004-b992-152f1e73366f",
+    "tokenType": "Bearer",
+    "decodedDetails": null
+  },
+  "authenticated": true,
+  "userAuthentication": {
+    "authorities": [
+      {
+        "authority": "ROLE_RS_WRITE"
+      }
+    ],
+    "details": {
+      "authorities": [
+        {
+          "authority": "ROLE_RS_WRITE"
+        }
+      ],
+      "details": {
+        "remoteAddress": "127.0.0.1",
+        "sessionId": null,
+        "tokenValue": "4e2f86fc-78af-4004-b992-152f1e73366f",
+        "tokenType": "Bearer",
+        "decodedDetails": null
+      },
+      "authenticated": true,
+      "userAuthentication": null,
+      "principal": "svc-account-3",
+      "oauth2Request": {
+        "clientId": "svc-account-3",
+        "scope": [
+          "resource-server-read",
+          "resource-server-write"
+        ],
+        "requestParameters": {
+          "grant_type": "client_credentials"
+        },
+        "resourceIds": [],
+        "authorities": [
+          {
+            "authority": "ROLE_RS_WRITE"
+          }
+        ],
+        "approved": true,
+        "refresh": false,
+        "redirectUri": null,
+        "responseTypes": [],
+        "extensions": {},
+        "grantType": "client_credentials",
+        "refreshTokenRequest": null
+      },
+      "clientOnly": true,
+      "credentials": "",
+      "name": "svc-account-3"
+    },
+    "authenticated": true,
+    "principal": "svc-account-3",
+    "credentials": "N/A",
+    "name": "svc-account-3"
+  },
+  "oauth2Request": {
+    "clientId": "svc-account-3",
+    "scope": [
+      "resource-server-read",
+      "resource-server-write"
+    ],
+    "requestParameters": {},
+    "resourceIds": [],
+    "authorities": [],
+    "approved": true,
+    "refresh": false,
+    "redirectUri": null,
+    "responseTypes": [],
+    "extensions": {},
+    "refreshTokenRequest": null,
+    "grantType": null
+  },
+  "clientOnly": false,
+  "principal": "svc-account-3",
+  "credentials": "",
+  "name": "svc-account-3"
+}
+
+# And the svc-account-4 can't, it's protected by scope
+curl -vv -u "svc-account-4:svc-account-4-secret" -X POST "http://localhost:9800/auth/oauth/token"         -d grant_type=client_credentials  | jq .
+
+{
+  "access_token": "c5987650-eb28-43db-b64a-14c79e18d2c0",
+  "token_type": "bearer",
+  "expires_in": 299,
+  "scope": "scope-1 scope-2"
+}
+
+curl -H "Authorization: Bearer c5987650-eb28-43db-b64a-14c79e18d2c0" -v localhost:8800/rs/user | jq .
+
+{
+  "error": "access_denied",
+  "error_description": "Access is denied"
+}
+
+
+```

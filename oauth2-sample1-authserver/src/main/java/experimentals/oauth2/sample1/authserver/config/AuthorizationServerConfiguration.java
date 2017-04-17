@@ -82,6 +82,8 @@ public class AuthorizationServerConfiguration {
             super.configure(endpoints);
 
             endpoints.authenticationManager(authenticationManager);
+
+
         }
     }
 
@@ -96,7 +98,7 @@ public class AuthorizationServerConfiguration {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
+            http.authorizeRequests().antMatchers("/me").authenticated().anyRequest().authenticated();
         }
     }
 

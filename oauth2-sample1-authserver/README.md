@@ -84,7 +84,7 @@ curl -vv -u "svc-account-2:svc-account-2-secret" -X POST "http://localhost:9800/
 
 ```
 
-```get user info by token
+```get user info by user autheticationed access token
 
 curl -vv -u "svc-account-3:svc-account-3-secret" -X POST "http://localhost:9800/auth/oauth/token" \
          -d grant_type=password \
@@ -193,6 +193,63 @@ curl -H "Authorization: Bearer 0cbe4708-3d8e-43c8-9904-2d165a54875e" -v localhos
   "credentials": "",
   "name": "user"
 }
+
+# get user by client only authentacated access token 
+curl -vv -u "svc-account-3:svc-account-3-secret" -X POST "http://localhost:9800/auth/oauth/token"         -d grant_type=client_credentials  | jq .
+
+{
+  "access_token": "2901a651-ffb6-425a-a719-5d5ae739c157",
+  "token_type": "bearer",
+  "expires_in": 293,
+  "scope": "resource-server-read resource-server-write"
+}
+
+curl -H "Authorization: Bearer 2901a651-ffb6-425a-a719-5d5ae739c157" -v localhost:9800/auth/me | jq .
+
+{
+  "authorities": [
+    {
+      "authority": "ROLE_RS_WRITE"
+    }
+  ],
+  "details": {
+    "remoteAddress": "0:0:0:0:0:0:0:1",
+    "sessionId": null,
+    "tokenValue": "2901a651-ffb6-425a-a719-5d5ae739c157",
+    "tokenType": "Bearer",
+    "decodedDetails": null
+  },
+  "authenticated": true,
+  "userAuthentication": null,
+  "principal": "svc-account-3",
+  "oauth2Request": {
+    "clientId": "svc-account-3",
+    "scope": [
+      "resource-server-read",
+      "resource-server-write"
+    ],
+    "requestParameters": {
+      "grant_type": "client_credentials"
+    },
+    "resourceIds": [],
+    "authorities": [
+      {
+        "authority": "ROLE_RS_WRITE"
+      }
+    ],
+    "approved": true,
+    "refresh": false,
+    "redirectUri": null,
+    "responseTypes": [],
+    "extensions": {},
+    "grantType": "client_credentials",
+    "refreshTokenRequest": null
+  },
+  "clientOnly": true,
+  "credentials": "",
+  "name": "svc-account-3"
+}
+
 
 ```
 
