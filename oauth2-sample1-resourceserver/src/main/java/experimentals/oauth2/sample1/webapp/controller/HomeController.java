@@ -1,4 +1,4 @@
-package experimentals.oauth2.sample1.rsserver.controller;
+package experimentals.oauth2.sample1.webapp.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;

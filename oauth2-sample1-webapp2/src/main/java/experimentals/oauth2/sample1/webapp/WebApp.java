@@ -1,16 +1,15 @@
-package experimentals.oauth2.sample1.rsserver;
+package experimentals.oauth2.sample1.webapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
  * @author kevin.wang.cy@gmail.com
  */
 @SpringBootApplication
-public class RSServer {
+public class WebApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(RSServer.class, args);
+        SpringApplication.run(WebApp.class, args);
     }
 }

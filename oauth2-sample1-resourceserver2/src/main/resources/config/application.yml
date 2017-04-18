@@ -1,0 +1,15 @@
+server:
+  context-path: /rs
+  port: 8801
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  user:
+    password: 123456
+  oauth2:
+   resource:
+     userInfoUri: http://localhost:9801/auth/me
+     preferTokenInfo: false

@@ -1,0 +1,10 @@
+server:
+  context-path: /auth
+  port: 9801
+logging:
+  level:
+    org.springframework.security: DEBUG
+security:
+  user:
+    password: none
+

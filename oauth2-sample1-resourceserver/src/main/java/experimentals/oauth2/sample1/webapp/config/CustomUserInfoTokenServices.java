@@ -1,4 +1,4 @@
-package experimentals.oauth2.sample1.rsserver.config;
+package experimentals.oauth2.sample1.webapp.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

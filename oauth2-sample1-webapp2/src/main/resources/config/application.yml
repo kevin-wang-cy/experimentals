@@ -1,0 +1,28 @@
+server:
+  port: 7801
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  user:
+    password: 123456
+  oauth2:
+   resource:
+     userInfoUri: http://localhost:9801/auth/me
+     preferTokenInfo: false
+
+
+spring:
+ aop:
+   proxy-target-class: true
+
+resourceServerClient:
+  clientId: svc-account-5
+  clientSecret: svc-account-5-secret
+  accessTokenUri: http://localhost:9801/auth/oauth/token
+
+
+resourceserver:
+  rooturi: http://localhost:8801/rs

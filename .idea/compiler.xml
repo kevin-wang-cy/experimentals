@@ -6,10 +6,16 @@
       <module name="cryptograph_test" target="1.8" />
       <module name="jackson_main" target="1.8" />
       <module name="jackson_test" target="1.8" />
+      <module name="oauth2-sample1-authserver2_main" target="1.8" />
+      <module name="oauth2-sample1-authserver2_test" target="1.8" />
       <module name="oauth2-sample1-authserver_main" target="1.8" />
       <module name="oauth2-sample1-authserver_test" target="1.8" />
+      <module name="oauth2-sample1-resourceserver2_main" target="1.8" />
+      <module name="oauth2-sample1-resourceserver2_test" target="1.8" />
       <module name="oauth2-sample1-resourceserver_main" target="1.8" />
       <module name="oauth2-sample1-resourceserver_test" target="1.8" />
+      <module name="oauth2-sample1-webapp2_main" target="1.8" />
+      <module name="oauth2-sample1-webapp2_test" target="1.8" />
       <module name="springboot-jersey-swagger-docker_main" target="1.8" />
       <module name="springboot-jersey-swagger-docker_test" target="1.8" />
       <module name="springboot-jersey_main" target="1.8" />
