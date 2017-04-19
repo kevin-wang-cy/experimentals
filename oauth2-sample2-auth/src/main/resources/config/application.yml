@@ -1,0 +1,16 @@
+server:
+  port: 9802
+logging:
+  level:
+    org.springframework: DEBUG
+
+security:
+  oauth2:
+    client:
+      clientId:  ${OAUTH2_CLIENT_GITHUB_CLIENT_ID:your-github-client-id}
+      clientSecret: ${OAUTH2_CLIENT_GITHUB_CLIENT_SECRET:your-github-client-secret}
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user

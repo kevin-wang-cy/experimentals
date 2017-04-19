@@ -16,6 +16,8 @@
       <module name="oauth2-sample1-resourceserver_test" target="1.8" />
       <module name="oauth2-sample1-webapp2_main" target="1.8" />
       <module name="oauth2-sample1-webapp2_test" target="1.8" />
+      <module name="oauth2-sample2-auth_main" target="1.8" />
+      <module name="oauth2-sample2-auth_test" target="1.8" />
       <module name="springboot-jersey-swagger-docker_main" target="1.8" />
       <module name="springboot-jersey-swagger-docker_test" target="1.8" />
       <module name="springboot-jersey_main" target="1.8" />

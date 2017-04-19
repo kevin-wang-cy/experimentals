@@ -1,0 +1,50 @@
+description = 'oauth2-sample1 auth'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		maven {
+            		url "${nexusPublicUrl}"
+        	}
+
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web') {
+        	exclude module: "spring-boot-starter-tomcat"
+	}
+	compile("org.springframework.boot:spring-boot-starter-jetty")
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	compile('org.springframework.boot:spring-boot-devtools')
+
+	/**
+	 * Twitter bootstrap and jQuery (which is all we need right now), plus AngularJS for later.
+	 * webjars "locator" from webjars site, which can be used by Spring to locate static assets in webjars 
+	 * 		without needing to know the exact versions
+	 * 		(hence the versionless /webjars/{all} links in the index.html).
+	 * 		The webjar locator is activated by default in a Spring Boot app
+	 * 		as long as you don¡¯t switch off the MVC autoconfiguration.
+	 */
+
+	compile('org.webjars:webjars-locator')
+	compile('org.webjars:bootstrap:3.2.0')
+	compile('org.webjars:jquery:2.2.1')
+	compile('org.webjars:angularjs:1.4.3')
+
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile("org.springframework.security.oauth:spring-security-oauth2")
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+}
+
+
