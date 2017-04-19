@@ -13,7 +13,7 @@ import java.security.Principal;
  */
 
 @RestController
-@RequestMapping("/me")
+@RequestMapping("/user")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
