@@ -4,7 +4,7 @@ logging:
   level:
     org.springframework: DEBUG
 
-security:
+github:
   oauth2:
     client:
       clientId:  ${OAUTH2_CLIENT_GITHUB_CLIENT_ID:your-github-client-id}
