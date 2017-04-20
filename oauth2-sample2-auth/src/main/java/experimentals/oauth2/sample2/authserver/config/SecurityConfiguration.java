@@ -17,8 +17,11 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author kevin.wang.cy@gmail.com
@@ -56,18 +59,49 @@ public class SecurityConfiguration {
             return new ResourceServerProperties();
         }
 
+
+
+
+        @Bean
+        @ConfigurationProperties("google.oauth2.client")
+        public AuthorizationCodeResourceDetails googleClient() {
+            return new AuthorizationCodeResourceDetails();
+        }
+
+        @Bean
+        @ConfigurationProperties("google.oauth2.resource")
+        public ResourceServerProperties googleResource() {
+            return new ResourceServerProperties();
+        }
+
         /**
          * acquire an OAuth2 access token from an authorization server, and load an
          * authentication object into the SecurityContext
          */
         private Filter ssoFilter() {
+            CompositeFilter filter = new CompositeFilter();
+            List<Filter> filters = new ArrayList<>();
+
             OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/github");
             OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(githubClient(), oauth2ClientContext);
             githubFilter.setRestTemplate(githubTemplate);
-            UserInfoTokenServices tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), githubClient().getClientId());
-            tokenServices.setRestTemplate(githubTemplate);
-            githubFilter.setTokenServices(tokenServices);
-            return githubFilter;
+            UserInfoTokenServices githubTokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), githubClient().getClientId());
+            githubTokenServices.setRestTemplate(githubTemplate);
+            githubFilter.setTokenServices(githubTokenServices);
+
+            filters.add(githubFilter);
+
+            OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/google");
+            OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(googleClient(), oauth2ClientContext);
+            googleFilter.setRestTemplate(googleTemplate);
+            UserInfoTokenServices googleTokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), googleClient().getClientId());
+            googleTokenServices.setRestTemplate(googleTemplate);
+            googleFilter.setTokenServices(googleTokenServices);
+
+            filters.add(googleFilter);
+
+            filter.setFilters(filters);
+            return filter;
         }
 
         @Bean
@@ -99,4 +133,6 @@ public class SecurityConfiguration {
                         .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
         }
     }
+
+
 }

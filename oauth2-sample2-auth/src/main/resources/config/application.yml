@@ -14,3 +14,17 @@ github:
       clientAuthenticationScheme: form
     resource:
       userInfoUri: https://api.github.com/user
+
+
+google:
+  oauth2:
+    client:
+      clientId: ${OAUTH2_CLIENT_GOOGLE_CLIENT_ID:your-google-client-id}
+      clientSecret: ${OAUTH2_CLIENT_GOOGLE_CLIENT_SECRET:your-google-client-secret}
+      accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      clientAuthenticationScheme: query
+      scope: profile email
+    resource:
+      userInfoUri: https://www.googleapis.com/plus/v1/people/me
+      preferTokenInfo: false

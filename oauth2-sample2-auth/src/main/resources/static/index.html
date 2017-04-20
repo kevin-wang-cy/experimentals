@@ -16,6 +16,10 @@
 <div class="container" ng-show="!home.authenticated">
     Login with: <a href="/login/github">Github</a>
 </div>
+<div class="container" ng-show="!home.authenticated">
+    Login with: <a href="/login/google">Google</a>
+</div>
+
 <div class="container" ng-show="home.authenticated">
     Logged in as: <span ng-bind="home.user"></span>
     <div>
