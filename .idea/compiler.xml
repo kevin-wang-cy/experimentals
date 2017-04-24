@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="bdd-exception_main" target="1.8" />
+      <module name="bdd-exception_test" target="1.8" />
+      <module name="bdd-junit_main" target="1.8" />
+      <module name="bdd-junit_test" target="1.8" />
+      <module name="bdd_main" target="1.8" />
+      <module name="bdd_test" target="1.8" />
       <module name="cryptograph_main" target="1.8" />
       <module name="cryptograph_test" target="1.8" />
       <module name="jackson_main" target="1.8" />

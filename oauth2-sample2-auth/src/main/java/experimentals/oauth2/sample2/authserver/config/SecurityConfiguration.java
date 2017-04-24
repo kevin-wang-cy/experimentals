@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,69 +41,13 @@ public class SecurityConfiguration {
      */
     protected static class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
         @Autowired
         /**
          * With EnableOAuth2Client annotation on, we can inject an OAuth2ClientContext
          * and use it to build an authentication filter #ssoFilter()
          */
         private OAuth2ClientContext oauth2ClientContext;
-
-        @Bean
-        @ConfigurationProperties("github.oauth2.client")
-        public AuthorizationCodeResourceDetails githubClient() {
-            return new AuthorizationCodeResourceDetails();
-        }
-
-        @Bean
-        @ConfigurationProperties("github.oauth2.resource")
-        public ResourceServerProperties githubResource() {
-            return new ResourceServerProperties();
-        }
-
-
-
-
-        @Bean
-        @ConfigurationProperties("google.oauth2.client")
-        public AuthorizationCodeResourceDetails googleClient() {
-            return new AuthorizationCodeResourceDetails();
-        }
-
-        @Bean
-        @ConfigurationProperties("google.oauth2.resource")
-        public ResourceServerProperties googleResource() {
-            return new ResourceServerProperties();
-        }
-
-        /**
-         * acquire an OAuth2 access token from an authorization server, and load an
-         * authentication object into the SecurityContext
-         */
-        private Filter ssoFilter() {
-            CompositeFilter filter = new CompositeFilter();
-            List<Filter> filters = new ArrayList<>();
-
-            OAuth2ClientAuthenticationProcessingFilter githubFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/github");
-            OAuth2RestTemplate githubTemplate = new OAuth2RestTemplate(githubClient(), oauth2ClientContext);
-            githubFilter.setRestTemplate(githubTemplate);
-            UserInfoTokenServices githubTokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(), githubClient().getClientId());
-            githubTokenServices.setRestTemplate(githubTemplate);
-            githubFilter.setTokenServices(githubTokenServices);
-
-            filters.add(githubFilter);
-
-            OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/google");
-            OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(googleClient(), oauth2ClientContext);
-            googleFilter.setRestTemplate(googleTemplate);
-            UserInfoTokenServices googleTokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), googleClient().getClientId());
-            googleTokenServices.setRestTemplate(googleTemplate);
-            googleFilter.setTokenServices(googleTokenServices);
-
-            filters.add(googleFilter);
-
-            filter.setFilters(filters);
-            return filter;
-        }
 
         @Bean
         /**
@@ -117,6 +62,62 @@ public class SecurityConfiguration {
             registration.setOrder(-100);
             return registration;
         }
+
+        static class Oauth2Configuration {
+
+            @NestedConfigurationProperty
+            private AuthorizationCodeResourceDetails client = new AuthorizationCodeResourceDetails();
+
+            @NestedConfigurationProperty
+            private ResourceServerProperties resource = new ResourceServerProperties();
+
+            public AuthorizationCodeResourceDetails getClient() {
+                return client;
+            }
+
+            public ResourceServerProperties getResource() {
+                return resource;
+            }
+        }
+
+        @Bean
+        @ConfigurationProperties("github.oauth2")
+        public Oauth2Configuration githubOAuth2Config() {
+            return new Oauth2Configuration();
+        }
+        @Bean
+        @ConfigurationProperties("google.oauth2")
+        public Oauth2Configuration googleOAuth2Config() {
+            return new Oauth2Configuration();
+        }
+
+        /**
+         * acquire an OAuth2 access token from an authorization server, and load an
+         * authentication object into the SecurityContext
+         */
+        private Filter ssoFilter() {
+            CompositeFilter filter = new CompositeFilter();
+            List<Filter> filters = new ArrayList<>();
+
+            filters.add(ssoFilter(githubOAuth2Config(), "/login/github"));
+            filters.add(ssoFilter(googleOAuth2Config(), "/login/google"));
+
+            filter.setFilters(filters);
+
+            return filter;
+        }
+
+        private Filter ssoFilter(Oauth2Configuration oauth2configer, String loginPath) {
+            OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(loginPath);
+            OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oauth2configer.getClient(), oauth2ClientContext);
+            filter.setRestTemplate(restTemplate);
+            UserInfoTokenServices userInfoTokenServices = new UserInfoTokenServices(oauth2configer.getResource().getUserInfoUri(), oauth2configer.getClient().getClientId());
+            userInfoTokenServices.setRestTemplate(restTemplate);
+            filter.setTokenServices(userInfoTokenServices);
+
+            return filter;
+        }
+
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
